@@ -1,3 +1,8 @@
+/** @jsx createElementEntity */
+
+import { COLLISION_LAYERS, createElementEntity, EntityDef, Fit, FLOATY_OBJECT_FLAGS, getAbsoluteHref, Shape } from "hubs";
+import * as THREE from "three";
+
 import {
   Types,
   addComponent,
@@ -5,6 +10,7 @@ import {
   defineQuery,
   enterQuery,
 } from "bitecs";
+
 
 import {
   App,
@@ -21,10 +27,9 @@ import {
   createNetworkedEntity,
   registerAddon,
 } from "hubs";
-import { Vector3 } from "three";
-import URL_QUACK from "../assets/quack.mp3";
-import URL_SPECIAL_QUACK from "../assets/specialquack.mp3";
-import { DuckPrefab } from "./duck-prefab";
+// import URL_QUACK from "../assets/quack.mp3";
+// import URL_SPECIAL_QUACK from "../assets/specialquack.mp3";
+import { MyPrefab } from "./my-prefab";
 
 const Quack = defineComponent({
   quacks: Types.f32,
@@ -37,6 +42,8 @@ type QuackParams = {
 const DEFAULTS: Required<QuackParams> = {
   quacks: 1,
 };
+
+const My_PREFAB_ID = "duck";
 
 
 // function playSound() {
@@ -52,8 +59,8 @@ const DEFAULTS: Required<QuackParams> = {
 //   }
 // }
 
-const heldQuackQuery = defineQuery([Quack, Held]);
-const heldQuackEnterQuery = enterQuery(heldQuackQuery);
+// const heldQuackQuery = defineQuery([Quack, Held]);
+// const heldQuackEnterQuery = enterQuery(heldQuackQuery);
 
 // const quackSystem = (app: App): void => {
 //   // heldQuackEnterQuery(app.world).forEach(() => {
@@ -87,35 +94,36 @@ registerAddon("polyuworld-addon-chemistrylab", {
     }, 
     order: SystemOrderE.PostPhysics 
   },
-  inflator: { 
-    jsx: { 
-      id: "quack", 
-      inflator: (world: HubsWorld, eid: number, params?: QuackParams): EntityID => {
-        params = Object.assign({}, params, DEFAULTS);
-        addComponent(world, Quack, eid);
-        Quack.quacks[eid] = params.quacks!;
-        return eid;
-      } 
-    } 
-  },
-  // prefab: {
-  //   id: "duck",
-  //   config: {
-  //     permission: PermissionE.SPAWN_AND_MOVE_MEDIA,
-  //     template: DuckPrefab,
-  //   },
+  // inflator: { 
+  //   jsx: { 
+  //     id: "quack", 
+  //     // inflator injects data (as component(s)) to entity and initializes it / them
+  //     inflator: (world: HubsWorld, eid: number, params?: QuackParams): EntityID => {
+  //       params = Object.assign({}, params, DEFAULTS);
+  //       addComponent(world, Quack, eid);
+  //       Quack.quacks[eid] = params.quacks!;
+  //       return eid;
+  //     } 
+  //   } 
   // },
+  prefab: {
+    id: My_PREFAB_ID,
+    config: {
+      permission: PermissionE.SPAWN_AND_MOVE_MEDIA,
+      template: MyPrefab
+    },
+  },
   chatCommand: { 
     id: "chemlab", 
     command: (app: App, args: string[]) => {
       console.log("i got", args);
 
-      const avatarEid = anyEntityWith(app.world, AvatarPOVNode)!;
-      const avatarPov = app.world.eid2obj.get(avatarEid)!;
-      const eid = createNetworkedEntity(APP.world, "duck", {});
-      const obj = app.world.eid2obj.get(eid)!;
-      obj.position.copy(avatarPov.localToWorld(new Vector3(0, 0, -1.5)));
-      obj.lookAt(avatarPov.getWorldPosition(new Vector3()));
+      const avatarEid: number = anyEntityWith(app.world, AvatarPOVNode)!;
+      const avatarPov: THREE.Object3D = app.world.eid2obj.get(avatarEid)!;
+      const eid: number = createNetworkedEntity(APP.world, My_PREFAB_ID, {});
+      const obj: THREE.Object3D = app.world.eid2obj.get(eid)!;
+      obj.position.copy(avatarPov.localToWorld(new THREE.Vector3(0, 0, -1.5)));
+      obj.lookAt(avatarPov.getWorldPosition(new THREE.Vector3()));
       //playSound();
     } 
   },
