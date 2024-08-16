@@ -1,7 +1,7 @@
 {
-  "name": "polyuworld-addon-template",
-  "version": "1.0.2",
-  "description": "Duckify your Hubs with this add-on",
+  "name": "polyuworld-addon-chemistrylab",
+  "version": "1.0.0",
+  "description": "Chemistry in VR!",
   "scripts": {
     "build": "webpack --mode=production",
     "prepare": "npm run build",
