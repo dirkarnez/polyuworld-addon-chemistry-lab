@@ -1,29 +1,19 @@
-# Hubs Duck Add-On
-A [Mozilla Hubs](https://github.com/mozilla/hubs/) add-on that adds support for spawning a duck in a Hubs room.
-
-https://github.com/MozillaReality/hubs-portals-addon/assets/837184/e436c12d-5369-4d8a-99d8-ced3512d4c80
-
-## Install
-1. Install the node module
+polyuworld-addon-chemistrylab
+=============================
+### Terrain
+- https://github.com/mrdoob/three.js/blob/master/examples/webgl_loader_stl.html
 ```
-> npm i https://github.com/MozillaReality/hubs-duck-addon.git
-```
-2. Add the add-on to your Hubs client add-ons configuration file.
 
-`addons.json`
-```
-{
-  "addons": [
-    ...
-    "hubs-duck-addon", 
-    ...
-  ]
-}
+    // Ground
 
-```
-2. Create room in your Hubs instance.
-3. Enable the add-on in the room configuration.
+				const plane = new THREE.Mesh(
+					new THREE.PlaneGeometry( 40, 40 ),
+					new THREE.MeshPhongMaterial( { color: 0xcbcbcb, specular: 0x474747 } )
+				);
+				plane.rotation.x = - Math.PI / 2;
+				plane.position.y = - 0.5;
+				scene.add( plane );
 
-## Usage
-- To spawn a duck use the ```duck``` chat command.
-- Click on the duck to make it quack.
+				plane.receiveShadow = true;
+scene.add( new THREE.HemisphereLight( 0x8d7c7c, 0x494966, 3 ) );
+```
