@@ -1,6 +1,7 @@
 polyuworld-addon-chemistrylab
 =============================
 ### Terrain
+- [Coding Challenge 11: 3D Terrain Generation with Perlin Noise in Processing - YouTube](https://www.youtube.com/watch?v=IKB1hWWedMk)
 - https://github.com/mrdoob/three.js/blob/master/examples/webgl_loader_stl.html
 ```
 
