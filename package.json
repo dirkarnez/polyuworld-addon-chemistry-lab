@@ -1,6 +1,6 @@
 {
-  "name": "polyuworld-addon-chemistrylab",
-  "version": "1.0.2",
+  "name": "polyuworld-addon-chemistry-lab",
+  "version": "1.0.0",
   "description": "Chemistry in VR!",
   "scripts": {
     "build": "webpack --mode=production",
