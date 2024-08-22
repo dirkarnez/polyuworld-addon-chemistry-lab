@@ -708,7 +708,7 @@ END`);
 						color.g = colors.getY( i );
 						color.b = colors.getZ( i );
 
-						const material = new THREE.MeshPhongMaterial( { color: color } );
+						const material = new THREE.MeshBasicMaterial( { color: color } );
 
 						const object = new THREE.Mesh( sphereGeometry, material );
 						object.position.copy( position );
@@ -747,7 +747,7 @@ END`);
 						start.multiplyScalar( 15 );
 						end.multiplyScalar( 15 );
 
-						const object = new THREE.Mesh( boxGeometry, new THREE.MeshPhongMaterial( { color: 0xffffff } ) );
+						const object = new THREE.Mesh( boxGeometry, new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
 						object.position.copy( start );
 						object.position.lerp( end, 0.5 );
 						object.scale.set( 1, 1, start.distanceTo( end ) );
