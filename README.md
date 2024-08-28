@@ -3,7 +3,7 @@ polyuworld-addon-chemistry-lab
 ### Terrain
 - [Coding Challenge 11: 3D Terrain Generation with Perlin Noise in Processing - YouTube](https://www.youtube.com/watch?v=IKB1hWWedMk)
 - https://github.com/mrdoob/three.js/blob/master/examples/webgl_loader_stl.html
-```
+```js
 
     // Ground
 
@@ -20,7 +20,7 @@ scene.add( new THREE.HemisphereLight( 0x8d7c7c, 0x494966, 3 ) );
 ```
 
 ### Generate Ground
-```
+```js
 const gridSize = 10; // Number of planes in each direction
 const planeSize = 1; // Size of each plane
 
