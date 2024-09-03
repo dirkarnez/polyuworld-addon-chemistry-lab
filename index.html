@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - lights - rect area light</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main.css">
+	</head>
+	<body>
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://dirkarnez.github.io/threejs-for-hubs/three.js-65b5105908f5f135cad25fed07e25f15f3876777/build/three.module.js",
+                    "three/addons/": "https://dirkarnez.github.io/threejs-for-hubs/three.js-65b5105908f5f135cad25fed07e25f15f3876777/examples/jsm/",
+                    "troika-three-text": "./troika-three-text.0.45.1.min.js"
+                }
+            }
+        </script>
+
+		<script type="module">
+
+			import * as THREE from 'three';
+
+			import Stats from 'three/addons/libs/stats.module.js';
+
+			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+			import { RectAreaLightHelper } from 'three/addons/helpers/RectAreaLightHelper.js';
+			import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
+
+			let renderer, scene, camera;
+			let stats, meshKnot;
+
+			init();
+
+			function init() {
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setAnimationLoop( animation );
+				document.body.appendChild( renderer.domElement );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 1000 );
+				camera.position.set( 0, 5, - 15 );
+
+                
+				scene = new THREE.Scene();
+
+				RectAreaLightUniformsLib.init();
+
+
+        //         const lights = [];
+		// lights[ 0 ] = new THREE.DirectionalLight( 0xffffff, 3 );
+		// lights[ 1 ] = new THREE.DirectionalLight( 0xffffff, 3 );
+		// lights[ 2 ] = new THREE.DirectionalLight( 0xffffff, 3 );
+
+		// lights[ 0 ].position.set( 0, 200, 0 );
+		// lights[ 1 ].position.set( 100, 200, 100 );
+		// lights[ 2 ].position.set( - 100, - 200, - 100 );
+
+		// scene.add( lights[ 0 ] );
+		// scene.add( lights[ 1 ] );
+		// scene.add( lights[ 2 ] );
+
+		// size means how long per line (unit)
+		// divisions means how many boxes per line
+		// therefore, both must have same value if GridHelper is intended to use as a ruler
+		const size = 10000, divisions = 10000;
+
+		const gridHelper = new THREE.GridHelper( size, divisions, 0xFFFFFF, 0x222222 );
+		scene.add(gridHelper);
+		
+
+
+
+				const rectLight1 = new THREE.RectAreaLight( 0xfdfbd3, 5, 4, 10 );
+				rectLight1.position.set( - 5, 5, 5 );
+				scene.add( rectLight1 );
+
+				const rectLight2 = new THREE.RectAreaLight( 0xfdfbd3, 5, 4, 10 );
+				rectLight2.position.set( 0, 5, 5 );
+				scene.add( rectLight2 );
+
+				const rectLight3 = new THREE.RectAreaLight( 0xfdfbd3, 5, 4, 10 );
+				rectLight3.position.set( 5, 5, 5 );
+				scene.add( rectLight3 );
+
+				scene.add( new RectAreaLightHelper( rectLight1 ) );
+				scene.add( new RectAreaLightHelper( rectLight2 ) );
+				scene.add( new RectAreaLightHelper( rectLight3 ) );
+
+				const geoFloor = new THREE.PlaneGeometry( 20, 20 );
+				const matStdFloor = new THREE.MeshStandardMaterial( { color: 0xbcbcbc, roughness: 0.1, metalness: 0 } );
+				const mshStdFloor = new THREE.Mesh( geoFloor, matStdFloor );
+                mshStdFloor.rotation.x = -Math.PI / 2; // Rotate to make it horizontal
+				scene.add( mshStdFloor );
+
+				const geoKnot = new THREE.TorusKnotGeometry( 1.5, 0.5, 200, 16 );
+				const matKnot = new THREE.MeshStandardMaterial( { color: 0x00ff00, roughness: 0, metalness: 0 } );
+				meshKnot = new THREE.Mesh( geoKnot, matKnot );
+				meshKnot.position.set( 0, 5, 0 );
+				scene.add( meshKnot );
+
+				const controls = new OrbitControls( camera, renderer.domElement );
+				controls.target.copy( meshKnot.position );
+				controls.update();
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize );
+
+				stats = new Stats();
+				document.body.appendChild( stats.dom );
+
+			}
+
+			function onWindowResize() {
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				camera.aspect = ( window.innerWidth / window.innerHeight );
+				camera.updateProjectionMatrix();
+
+			}
+
+			function animation( time ) {
+
+				meshKnot.rotation.y = time / 1000;
+
+				renderer.render( scene, camera );
+
+				stats.update();
+
+			}
+
+		</script>
+	</body>
+</html>
