@@ -10,7 +10,7 @@ const pdbLoader = new PDBLoader();
 export function MyPrefab(): EntityDef {
 
     // const geometry = new THREE.BoxGeometry( 1, 1, 1 ); 
-    // const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} ); 
+    // const material = new THREE.MeshPhongMaterial( {color: 0x00ff00} ); 
     // new THREE.Group().children[0].geometry
 	const root = new THREE.Group();
 
@@ -102,7 +102,7 @@ END                                                                     NONE  43
 						color.g = colors.getY( i );
 						color.b = colors.getZ( i );
 
-						const material = new THREE.MeshBasicMaterial( { color: color } );
+						const material = new THREE.MeshPhongMaterial( { color: color } );
 
 						const object = new THREE.Mesh( sphereGeometry, material );
 						object.position.copy( position );
@@ -141,7 +141,7 @@ END                                                                     NONE  43
 						start.multiplyScalar( 1 );
 						end.multiplyScalar( 1 );
 
-						const object = new THREE.Mesh( boxGeometry, new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
+						const object = new THREE.Mesh( boxGeometry, new THREE.MeshPhongMaterial( { color: 0xffffff } ) );
 						object.position.copy( start );
 						object.position.lerp( end, 0.5 );
 						object.scale.set(0.06, 0.06, start.distanceTo( end ) );
