@@ -48,3 +48,16 @@ const cube = new THREE.Mesh( geometry, material );
 cube.position.set(0, 1.8, 0);
 APP.scene.sceneEl.object3D.add(cube); // scene.add in aframe
 ```
+
+
+### TODOs
+- navmesh
+    - https://github.com/Hubs-Foundation/gltf-navmesh-generator/blob/17a107514c5908960850021418eae25bb6f27d4c/bin/gltf-navmesh-generator
+```
+const Builder = require("three-pathfinding/src/Builder");
+  const geometry = new THREE.Geometry().fromBufferGeometry(navMeshObj.geometry);
+
+  const navMeshData = Builder.buildZone(geometry);
+```
+sceneEl.systems.nav.loadMesh
+- !!!!!!!!!!!!!!!https://github.com/Hubs-Foundation/hubs/blob/f3c685ed3fe71ab534987b4ce9cadac8eeff3913/src/bit-systems/scene-loading.ts#L113
