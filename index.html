@@ -40,7 +40,6 @@
 		</script> -->
 
 		<script type="module">
-
 			import * as THREE from 'three';
 
 			//import Stats from 'three/addons/libs/stats.module.js';
@@ -51,12 +50,9 @@
 			import { MyRender } from "./src/lib.js";
 
 			let renderer, scene, camera;
-			let stats;
-
 			init();
 
 			function init() {
-
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
@@ -67,31 +63,23 @@
 				camera.position.set( 0, 5, -15 );
 				const orbit = new OrbitControls( camera, renderer.domElement );
 				orbit.enableZoom = true;
-				
+
 				scene = new THREE.Scene();
 
 				MyRender(scene, renderer, camera);
-				window.addEventListener( 'resize', onWindowResize );
-			}
 
-			function onWindowResize() {
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				camera.aspect = ( window.innerWidth / window.innerHeight );
-				camera.updateProjectionMatrix();
-
+				window.addEventListener( 'resize', function () {
+					renderer.setSize( window.innerWidth, window.innerHeight );
+					camera.aspect = ( window.innerWidth / window.innerHeight );
+					camera.updateProjectionMatrix();
+				});
 			}
 
 			function animation( time ) {
-
 				//meshKnot.rotation.y = time / 1000;
-
 				renderer.render( scene, camera );
-
 				//stats.update();
-
 			}
-
 		</script>
 	</body>
 </html>
